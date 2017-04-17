@@ -13,44 +13,34 @@
 
         //读取预先设定的proto
         var proto = ProtoBuf.loadProtoFile("./face.proto");
-
         //规定的通用信息类
         var RecognitionHeader = proto.build("RecognitionHeader");
-
         //规定的图片类
         var ImgInfo = proto.build("ImgInfo");
-
         //规定的请求类
         var Res = proto.build("RecognitionRequest");
-
         //规定的响应类
         var Req = proto.build("RecognitionResponse");
-
         //实例化通用信息类/图片信息类，准备填入实例请求实例
         var rh = new RecognitionHeader();
         var imginfo = new ImgInfo();
-
         //*********************************************实际业务逻辑部分，需要按需填写 start**************************************************
         //填写通用信息
         rh.server_id = 1;           	//业务ID   1 打卡，2 开车门
         rh.Sequence  = 1;          	//顺序号，客户端发起，从任意值开始，每次请求加1
         rh.client_id = 1;           	//客户端ID，客户端唯一标示，用于记录日志标示客户端
         rh.group_id = "1000";			// 1、1~10000为企业号//2、大于1000时为普通用户
-
         //填写图片信息
         imginfo.img_size = 10000;                //图片大小
         imginfo.imgmd5sum = '一个计算后的md5';      //图片MD5值
         imginfo.img = new ArrayBuffer(1);      //图片二进制文件
-
         //实例化请求类，并填写相应信息
         var res = new Res();
         res.rh = rh;
         res.imginfo = imginfo;
         //*********************************************实际业务逻辑部分，需要按需填写 end**************************************************
-
         //把序列化后的请求实例作为请求体
         var body = new Uint8Array(res.toArrayBuffer());
-
         //http post请求验证
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'http://123.59.122.211:9032/v1/recognition', true);
@@ -63,7 +53,6 @@
             }
         };
         xhr.send(body);
-
     </script>
 </head>
 <body>
